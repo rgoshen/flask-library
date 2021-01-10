@@ -59,5 +59,17 @@ def edit():
     return render_template('edit_rating.html', book=book_selected)
 
 
+@app.route("/delete")
+def delete():
+    """Deletes the passed in book from db adn redirects back to index.html."""
+    book_id = request.args.get('id')
+
+    # DELETE RECORD BY ID
+    book_to_delete = Book.query.get(book_id)
+    db.session.delete(book_to_delete)
+    db.session.commit()
+    return redirect(url_for('home'))
+
+
 if __name__ == "__main__":
     app.run(debug=True)
